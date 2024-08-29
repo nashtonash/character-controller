@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqh53yjt6g4u7"]
+
+[ext_resource type="Texture2D" uid="uid://bsm407j233h65" path="res://assets/checker.png" id="1_04nit"]
+[ext_resource type="PackedScene" uid="uid://cy8j7qoqyptcd" path="res://scenes/player.tscn" id="2_2y743"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jh8h3"]
+albedo_texture = ExtResource("1_04nit")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_siay3"]
+size = Vector2(50, 50)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_vj1hp"]
+
+[node name="TestLevel" type="Node"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="LevelGeometry" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LevelGeometry"]
+material_override = SubResource("StandardMaterial3D_jh8h3")
+mesh = SubResource("PlaneMesh_siay3")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelGeometry"]
+shape = SubResource("WorldBoundaryShape3D_vj1hp")
+
+[node name="Player" parent="." instance=ExtResource("2_2y743")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
